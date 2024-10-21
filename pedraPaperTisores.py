@@ -1,22 +1,15 @@
-from PyQt5.QtWidgets import *
-#from PyQt5.QtWidgets import QLabel,QPushButton,QMainWindow,QVBoxLayout,QGridLayout,QHBoxLayout,QWidget,QApplication
-from PyQt5.QtCore import Qt,QSize
-from PyQt5.QtGui import QFont,QIcon,QPixmap
-from PyQt5.QtWidgets import QWidget
+import os
 import partida
 import utils as ut
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-from PyQt5 import QtWidgets
-from PyQt5 import QtCore
-from PyQt5.QtGui import QFont, QIcon, QColor
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtGui import QFont, QIcon, QPixmap
 from PyQt5.QtWidgets import (QApplication, QDialog, QPushButton, QTableWidget,
-                             QTableWidgetItem, QAbstractItemView, QHeaderView, QMenu,
-                             QActionGroup, QAction, QMessageBox)
-import os
+                             QTableWidgetItem, QAbstractItemView, QMenu,
+                             QAction, QMessageBox, QMainWindow, QVBoxLayout,
+                             QGridLayout, QHBoxLayout, QWidget, QLabel, QLineEdit,
+                             QTabWidget, QToolBar, QStatusBar, QInputDialog)
+from PyQt5 import QtWidgets
+import qdarktheme
 
 game = partida.game()
 
@@ -195,6 +188,8 @@ class MainWindow(QMainWindow):
         clar = QAction("Tema Clar", self)
         detalls = QAction("Detalls del registres", self)
         
+        fosc.triggered.connect(lambda checked: self.oscur())
+        clar.triggered.connect(lambda checked: self.clar())
         detalls.triggered.connect(lambda checked: self.obrirDetalls())
         
         context = QMenu(self)
@@ -202,6 +197,12 @@ class MainWindow(QMainWindow):
         context.addAction(clar)
         context.addAction(detalls)
         context.exec_(self.mapToGlobal(pos))
+        
+    
+    def clar(self):
+        qdarktheme.setup_theme("light")
+    def oscur(self):
+        qdarktheme.setup_theme()
         
     def obrirDetalls(self):
         
@@ -463,6 +464,9 @@ class MainWindow(QMainWindow):
 
 app = QApplication([])
 window = MainWindow()
+
+#QPalette
+qdarktheme.setup_theme()
 window.setStyleSheet("QMainWindow{background-color: #5cb0df}")
 window.show()
 
